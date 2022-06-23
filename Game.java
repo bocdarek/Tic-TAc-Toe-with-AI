@@ -15,6 +15,7 @@ public class Game {
         board.display();
         makeMove(takeCoordinates());
         board.display();
+        board.evaluate();
     }
 
     private String requestInitialState() {
