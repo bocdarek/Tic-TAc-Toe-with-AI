@@ -5,16 +5,26 @@ import java.util.Scanner;
 public class Game {
 
     private final Board board = new Board();
+    private final Bot bot = new Bot(board);
     private final Messenger msg = Messenger.getInstance();
     private final Scanner sc = CommonScanner.getInstance();
     private String initialState;
 
     public void play() {
-        initialState = requestInitialState();
-        board.setInitialState(initialState);
-        board.display();
-        makeMove(takeCoordinates());
-        board.display();
+//        initialState = requestInitialState();
+//        board.setInitialState(initialState);
+
+        board.display();    // print empty board
+        int turn = 0;
+        while (!board.isWinner()) {
+            if (turn % 2 == 0) {
+                makeMove(takeCoordinates(), 'X');
+            } else {
+                bot.makeMove("easy");
+            }
+            board.display();
+            turn++;
+        }
         board.evaluate();
     }
 
@@ -50,7 +60,7 @@ public class Game {
      private boolean validateCoordinates(int[] coordinates) {
          int row = coordinates[0];
          int col = coordinates[1];
-         if (board.getCells()[row][col] == '_') {
+         if (board.getCells()[row][col] == ' ') {
              return true;
          }
          msg.occupiedCellError();
@@ -61,6 +71,12 @@ public class Game {
         int row = coordinates[0];
         int col = coordinates[1];
         board.getCells()[row][col] = onTheMove();
+    }
+
+    private void makeMove(int[] coordinates, char ch) {
+        int row = coordinates[0];
+        int col = coordinates[1];
+        board.getCells()[row][col] = ch;
     }
 
      private char onTheMove() {

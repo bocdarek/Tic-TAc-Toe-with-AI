@@ -45,14 +45,16 @@ public class Board {
         String result = "Game not finished";
         if (isWinner('X')) {
             result = "X wins";
-        }
-        if (isWinner('O')) {
+        } else if (isWinner('O')) {
             result = "O wins";
-        }
-        if (isBoardFull()) {
+        } else if (isBoardFull()) {
             result = "Draw";
         }
         System.out.println(result);
+    }
+
+    public boolean isWinner() {
+        return isWinner('X') || isWinner('O');
     }
 
     private boolean isWinner(char ch) {

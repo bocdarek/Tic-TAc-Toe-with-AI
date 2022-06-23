@@ -30,5 +30,4 @@ public class Messenger {
                 "Input must contain only 'X', 'O' and '_' and its length must be 9.");
 
     }
-
 }
