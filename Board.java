@@ -57,7 +57,7 @@ public class Board {
         return isWinner('X') || isWinner('O');
     }
 
-    private boolean isWinner(char ch) {
+    public boolean isWinner(char ch) {
         return checkHorizontal(ch) || checkVertical(ch) || checkDiagonal(ch);
     }
 
