@@ -6,21 +6,20 @@ public class Game {
 
     private final Board board = new Board();
     private final Bot bot = new Bot(board);
-    private final Messenger msg = Messenger.getInstance();
-    private final Scanner sc = CommonScanner.getInstance();
-    private String initialState;
+    private final static Messenger msg = Messenger.getInstance();
+    private final static Scanner sc = CommonScanner.getInstance();
 
-    public void play() {
-//        initialState = requestInitialState();
-//        board.setInitialState(initialState);
-
-        board.display();    // print empty board
+    public void play(String[] modes) {
+        board.clear();
+        board.display();
         int turn = 0;
-        while (!board.isWinner()) {
-            if (turn % 2 == 0) {
-                makeMove(takeCoordinates(), 'X');
+        char ch = ' ';
+        while (!board.isGameFinished()) {
+            ch = ch == 'X' ? 'O' : 'X';
+            if (modes[turn % 2].equals("USER")) {
+                makeMove(ch);
             } else {
-                bot.makeMove("easy");
+                bot.makeMove(modes[turn % 2], ch);
             }
             board.display();
             turn++;
@@ -28,16 +27,6 @@ public class Game {
         board.evaluate();
     }
 
-    private String requestInitialState() {
-        while (true) {
-            System.out.print("Enter the cells: ");
-            String input = sc.nextLine().trim().toUpperCase();
-            if (input.matches("^[XO_]{9}$")) {
-                return input;
-            }
-            msg.initialStateInputError();
-        }
-    }
 
      private int[] takeCoordinates() {
          int[] coordinates;
@@ -67,29 +56,10 @@ public class Game {
          return false;
      }
 
-    private void makeMove(int[] coordinates) {
-        int row = coordinates[0];
-        int col = coordinates[1];
-        board.getCells()[row][col] = onTheMove();
-    }
-
-    private void makeMove(int[] coordinates, char ch) {
+    private void makeMove(char ch) {
+        int[] coordinates = takeCoordinates();
         int row = coordinates[0];
         int col = coordinates[1];
         board.getCells()[row][col] = ch;
     }
-
-     private char onTheMove() {
-        int x = 0;
-        int o = 0;
-        for (int i = 0; i < initialState.length(); i++) {
-            char ch = initialState.charAt(i);
-            if (ch == 'X') {
-                x++;
-            } else if (ch == 'O') {
-                o++;
-            }
-        }
-        return o >= x ? 'X' : 'O';
-     }
 }

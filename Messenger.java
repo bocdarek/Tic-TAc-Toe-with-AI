@@ -30,4 +30,8 @@ public class Messenger {
                 "Input must contain only 'X', 'O' and '_' and its length must be 9.");
 
     }
+
+    public void wrongCommandMessage() {
+        System.out.println("Bad parameters!");
+    }
 }

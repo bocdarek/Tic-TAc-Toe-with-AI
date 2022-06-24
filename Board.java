@@ -7,20 +7,16 @@ public class Board {
     private final char[][] cells = new char[3][3];
 
     public Board() {
-        for (char[] cell : cells) {
-            Arrays.fill(cell, ' ');
-        }
+        clear();
     }
 
     public char[][] getCells() {
         return cells;
     }
 
-    public void setInitialState(String input) {
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j] = input.charAt(3 * i + j);
-            }
+    public void clear() {
+        for (char[] cell : cells) {
+            Arrays.fill(cell, ' ');
         }
     }
 
@@ -51,6 +47,10 @@ public class Board {
             result = "Draw";
         }
         System.out.println(result);
+    }
+
+    public boolean isGameFinished() {
+        return isWinner() || isBoardFull();
     }
 
     public boolean isWinner() {
@@ -91,7 +91,7 @@ public class Board {
     private boolean isBoardFull() {
         for (char[] cell : cells) {
             for (char ch : cell) {
-                if (ch == '_') {
+                if (ch == ' ') {
                     return false;
                 }
             }
