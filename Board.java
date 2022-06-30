@@ -20,6 +20,14 @@ public class Board {
         }
     }
 
+    public void setInitialState(String input) {
+        for (int i = 0; i < cells.length; i++) {
+            cells[0][i] = input.charAt(i);
+            cells[1][i] = input.charAt(i + 3);
+            cells[2][i] = input.charAt(i + 6);
+        }
+    }
+
     public void display() {
         printDashedLine();
         for (char[] cell : cells) {
@@ -61,6 +69,10 @@ public class Board {
         return checkHorizontal(ch) || checkVertical(ch) || checkDiagonal(ch);
     }
 
+    public boolean isDraw() {
+        return isBoardFull() && !isWinner();
+    }
+
     private boolean checkHorizontal(char ch) {
         boolean isWinner = false;
         for (char[] row : cells) {
@@ -97,5 +109,16 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public Board deepCopy() {
+        Board copiedBoard = new Board();
+        char[][] copiedCells = copiedBoard.getCells();
+        for (int i = 0; i < copiedCells.length; i++) {
+            for (int j = 0; j < copiedCells[i].length; j++) {
+                copiedCells[i][j] = cells[i][j];
+            }
+        }
+        return copiedBoard;
     }
 }

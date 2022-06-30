@@ -10,7 +10,7 @@ public class Parser {
     private static final String correctInput = "^[123]\\s+[123]$";
     private static final String numbersInput = "^[0-9]+\\s+[0-9]+$";
 
-    private static final List<String> possibleCommands = List.of("USER", "EASY", "MEDIUM");
+    private static final List<String> possibleCommands = List.of("USER", "EASY", "MEDIUM", "HARD");
 
     public static int[] parseCoordinates(String input) {
         if (input.matches(correctInput)) {

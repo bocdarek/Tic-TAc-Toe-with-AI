@@ -15,10 +15,11 @@ public class Game {
         char ch = ' ';
         while (!board.isGameFinished()) {
             ch = ch == 'X' ? 'O' : 'X';
-            if (modes[turn % 2].equals("USER")) {
+            String mode = modes[turn % 2];
+            if (mode.equals("USER")) {
                 player.makeMove(ch);
             } else {
-                bot.makeMove(modes[turn % 2], ch);
+                bot.makeMove(mode, ch);
             }
             board.display();
             turn++;
